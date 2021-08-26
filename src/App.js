@@ -1,10 +1,9 @@
 import React from 'react'
+import { Category } from './components/Category'
 
 const App = () => {
   return (
-
-      <h1>Hola React</h1>
-
+    <Category/>
   )
 }
 
