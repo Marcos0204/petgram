@@ -33,5 +33,8 @@
     "webpack-cli": "^4.8.0",
     "webpack-dev-server": "^4.0.0",
     "wepack-cli": "^0.0.1-security"
+  },
+  "dependencies": {
+    "styled-components": "^5.3.1"
   }
 }

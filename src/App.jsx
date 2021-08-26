@@ -2,9 +2,9 @@ import React from 'react'
 
 const App = () => {
   return (
-    <div>
-      <h1>Hola React, adoro</h1>
-    </div>
+
+      <h1>Hola React</h1>
+
   )
 }
 
