@@ -1,24 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import { Category } from '../Category';
-import { Lista, Item } from './styles';
+import { List, Item } from './styles';
 
 export const ListOfCategory = () =>{
-  const [categories, setCategories] = useState([
-    {
-      "id": 1,
-      "name": "cats",
-      "emoji": "🐱",
-      "cover": "https://res.cloudinary.com/midudev/image/upload/w_150/v1555671700/category_cats.jpg",
-      "path": "/photos/cats"
-    },
-    {
-      "id": 2,
-      "name": "dogs",
-      "emoji": "🐶",
-      "cover": "https://res.cloudinary.com/midudev/image/upload/w_150/v1555671700/category_dogs.jpg",
-      "path": "/photos/dogs"
-    },
-  ])
+  const [categories, setCategories] = useState([]);
+  const [showFixed, setShowFixed] = useState(false)
 
   useEffect(function () {
     window.fetch('http://localhost:3000/categories')
@@ -27,13 +13,30 @@ export const ListOfCategory = () =>{
         setCategories(response)
       })
   }, [])
-  return (
-    <Lista>
+  useEffect(function () {
+    const onScroll = e => {
+      const newShowFixed = window.scrollY > 200
+      showFixed !== newShowFixed && setShowFixed(newShowFixed)
+    }
+
+    document.addEventListener('scroll', onScroll)
+
+    return () => document.removeEventListener('scroll', onScroll)
+  }, [showFixed])
+
+  const renderList = (fixed) => (
+    <List className={fixed ? 'fixed' : ''}>
       {
-        categories.map((category) => (
-          <Item key={category.id} ><Category {...category} /> </Item>
-        ))
+        categories.map(category => <Item key={category.id}><Category {...category} /></Item>)
       }
-    </Lista>
+    </List>
+  )
+
+  return (
+    <>
+      {renderList()}
+      {showFixed && renderList(true)}
+    </>
+     
   )
 };
