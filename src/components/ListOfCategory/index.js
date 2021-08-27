@@ -2,17 +2,26 @@ import React, {useState, useEffect} from 'react';
 import { Category } from '../Category';
 import { List, Item } from './styles';
 
-export const ListOfCategory = () =>{
+const useCategoriDate= () =>{
   const [categories, setCategories] = useState([]);
-  const [showFixed, setShowFixed] = useState(false)
-
+  const [ loading, setLoading ] = useState(false)
   useEffect(function () {
+    setLoading(true)
     window.fetch('http://localhost:3000/categories')
       .then(res => res.json())
       .then(response => {
         setCategories(response)
+        setLoading(false)
       })
   }, [])
+  return {categories, loading}
+}
+
+export const ListOfCategory = () =>{
+  const {categories, loadin} = useCategoriDate();
+  const [showFixed, setShowFixed] = useState(false)
+
+  
   useEffect(function () {
     const onScroll = e => {
       const newShowFixed = window.scrollY > 200
@@ -25,9 +34,13 @@ export const ListOfCategory = () =>{
   }, [showFixed])
 
   const renderList = (fixed) => (
-    <List className={fixed ? 'fixed' : ''}>
+    <List fixed={fixed} >
       {
-        categories.map(category => <Item key={category.id}><Category {...category} /></Item>)
+        loadin ?(<Item key={'loding'}> <Category/> </Item>)
+        : (
+          categories.map(category => <Item key={category.id}><Category {...category} /></Item>)
+        )
+        
       }
     </List>
   )
