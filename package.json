@@ -1,7 +1,7 @@
 {
-  "name": "curso-platzi-react-avanzado",
+  "name": "app",
   "version": "1.0.0",
-  "description": "**¡Sígueme en Youtube para más contenido de React y Javascript!** 👉 https://www.youtube.com/midudev",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "intersection-observer": "^0.12.0",
+    "json-server": "^0.17.0",
     "react-icons": "^4.2.0",
     "styled-components": "^5.3.1"
   }

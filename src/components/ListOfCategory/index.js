@@ -1,24 +1,30 @@
 import React, {useState, useEffect} from 'react';
 import { Category } from '../Category';
 import { List, Item } from './styles';
+import Data from '../../../db.json'
 
 const useCategoriDate= () =>{
   const [categories, setCategories] = useState([]);
   const [ loading, setLoading ] = useState(false)
   useEffect(function () {
     setLoading(true)
-    window.fetch('http://localhost:3000/categories')
-      .then(res => res.json())
-      .then(response => {
-        setCategories(response)
-        setLoading(false)
-      })
+    setCategories(Data.categories)
+    setTimeout(() => {
+      setLoading(false)
+    }, 3000);
+    // setLoading(true)
+    // // window.fetch('http://localhost:3000/categories')
+    // //   .then(res => res.json())
+    // //   .then(response => {
+    // //     setCategories(response)
+    // //     setLoading(false)
+    // //   })
   }, [])
   return {categories, loading}
 }
 
 export const ListOfCategory = () =>{
-  const {categories, loadin} = useCategoriDate();
+  const {categories, loading} = useCategoriDate();
   const [showFixed, setShowFixed] = useState(false)
 
   
@@ -36,7 +42,7 @@ export const ListOfCategory = () =>{
   const renderList = (fixed) => (
     <List fixed={fixed} >
       {
-        loadin ?(<Item key={'loding'}> <Category/> </Item>)
+        loading ?(<Item key={'loding'}> <Category/> </Item>)
         : (
           categories.map(category => <Item key={category.id}><Category {...category} /></Item>)
         )
